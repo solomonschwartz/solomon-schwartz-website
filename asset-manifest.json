@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/static/css/main.34f44011.css",
+    "main.js": "/static/js/main.3eea598f.js",
+    "static/js/453.3b9f585c.chunk.js": "/static/js/453.3b9f585c.chunk.js",
+    "static/media/Supply and Demand Below Zero.pdf": "/static/media/Supply and Demand Below Zero.244e1c17cb9f7dde90ac.pdf",
+    "static/media/Quicksort.gif": "/static/media/Quicksort.02bff2671818dd8868f5.gif",
+    "static/media/samuel.jpeg": "/static/media/samuel.b9b0525916cebcf39189.jpeg",
+    "static/media/headshot.jpg": "/static/media/headshot.508f9b950cb78e7dce48.jpg",
+    "static/media/BigDataOwnership.pdf": "/static/media/BigDataOwnership.fea9f1595b1476d8e089.pdf",
+    "static/media/Shoftim9.pdf": "/static/media/Shoftim9.99bb020291bbdc3a5602.pdf",
+    "static/media/big_data.jpeg": "/static/media/big_data.257193209f4a34a33a29.jpeg",
+    "static/media/imagenet.jpeg": "/static/media/imagenet.b371f55cd52e52bc00ea.jpeg",
+    "static/media/QuickPivot.pdf": "/static/media/QuickPivot.3c024c6242c3dea1f20c.pdf",
+    "static/media/supply_zero.png": "/static/media/supply_zero.222c444d6fcbdc421d9d.png",
+    "index.html": "/index.html",
+    "main.34f44011.css.map": "/static/css/main.34f44011.css.map",
+    "main.3eea598f.js.map": "/static/js/main.3eea598f.js.map",
+    "453.3b9f585c.chunk.js.map": "/static/js/453.3b9f585c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.34f44011.css",
+    "static/js/main.3eea598f.js"
+  ]
+}
