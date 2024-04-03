@@ -7,6 +7,7 @@ const Resume = () => {
     <div id="resume">
        <a href="https://docs.google.com/document/d/1W6O9U6x5VeoKOVWkQjLF7HZogn3Wm7t5CK3USA2MzNo/edit" className="resume-button">Open Resume</a>
       <iframe src="https://docs.google.com/document/d/1W6O9U6x5VeoKOVWkQjLF7HZogn3Wm7t5CK3USA2MzNo/edit" title="Resume" className="resume-iframe"></iframe>
+        <div className="mobile-message">iframe doesn't render for mobile.</div>
     </div>
   );
 }

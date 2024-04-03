@@ -1,5 +1,6 @@
 /* Writing.css */
 
+/* Desktop styles */
 #writing {
   padding: 20px;
   background-color: #ccc;
@@ -8,7 +9,6 @@
 .writing-container {
   display: flex;
   flex-wrap: wrap;
-
 }
 
 .paper-group {
@@ -87,4 +87,38 @@
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
+}
+
+/* Writing.css */
+
+/* Mobile styles */
+@media only screen and (max-width: 600px) {
+  .writing-container {
+    flex-direction: column; /* Change to vertical stacking */
+  }
+
+  .paper-group {
+    width: 100%; /* Each paper group takes up full container width */
+    display: block; /* Change display to block */
+    border: none; /* Remove border */
+    padding: 20px; /* Add padding */
+  }
+
+  .paper-info {
+    padding: 10px; /* Adjust padding */
+    border-bottom: #111111 solid 2px; /* Add border to separate description */
+  }
+
+  .paper-image {
+    display: flex;
+    justify-content: center; /* Center the image horizontally */
+    align-items: center; /* Center the image vertically */
+  }
+
+  .paper-image img {
+    max-height: 50%; /* Set max height to 50% of the container height */
+    max-width: 80%; /* Set max width to 80% of the container width */
+    width: auto;
+    margin-bottom: 10px; /* Add margin between images */
+  }
 }

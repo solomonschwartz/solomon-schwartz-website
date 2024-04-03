@@ -1,3 +1,6 @@
+/* Resume.css */
+
+/* Desktop styles */
 #resume {
   background-color: #000000; /* Blue background */
   color: #000; /* White text color */
@@ -15,8 +18,6 @@
   background-color: #5da6e3; /* Blue background */
   margin: 0 auto; /* Center horizontally */
 }
-
-/* Resume.css */
 
 .resume-button {
   position: absolute; /* Set position absolute */
@@ -36,3 +37,20 @@
   background-color: #2980b9; /* Darker blue color on hover */
 }
 
+/* Mobile styles */
+@media only screen and (max-width: 600px) {
+  .resume-iframe {
+    display: none; /* Hide iframe on mobile */
+  }
+
+  .resume-button {
+    top: 100px; /* Adjust top position for better visibility */
+  }
+
+  .mobile-message {
+    display: block; /* Display the message */
+    margin-top: 100px; /* Add some margin */
+    font-size: 18px; /* Adjust font size */
+    color: white;
+  }
+}
