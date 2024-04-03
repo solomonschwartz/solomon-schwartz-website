@@ -1,0 +1,38 @@
+#resume {
+  background-color: #000000; /* Blue background */
+  color: #000; /* White text color */
+  padding: 50px;
+  margin: 0 auto;
+  text-align: center; /* Center text content */
+}
+
+.resume-iframe {
+  position: relative;
+  top: 10px;
+  width: 85%; /* Set iframe width */
+  height: 650px; /* Set iframe height */
+  border: 18px solid #5da6e3; /* Add a border around the iframe */
+  background-color: #5da6e3; /* Blue background */
+  margin: 0 auto; /* Center horizontally */
+}
+
+/* Resume.css */
+
+.resume-button {
+  position: absolute; /* Set position absolute */
+  top: 70px; /* Adjust top position as needed */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Center horizontally */
+  z-index: 1; /* Set z-index to ensure the button appears above the iframe */
+  background-color: #3498db; /* Button background color */
+  color: #fff; /* Button text color */
+  padding: 10px 20px; /* Button padding */
+  border: none; /* Remove button border */
+  border-radius: 5px; /* Add border radius */
+  text-decoration: none; /* Remove default link underline */
+}
+
+.resume-button:hover {
+  background-color: #2980b9; /* Darker blue color on hover */
+}
+

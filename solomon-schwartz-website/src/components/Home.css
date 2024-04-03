@@ -1,0 +1,53 @@
+/* Home.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
+:root {
+  --primary-color: #3498db; /* Define the primary color (blue) */
+}
+#home {
+  background-color: #000;
+  color: #3498db;
+  padding: 50px;
+}
+
+.home-container {
+  display: flex;
+  justify-content: center; /* Center the content horizontally */
+  align-items: center; /* Center the content vertically */
+}
+
+.bio {
+  flex: 1; /* Take up remaining space */
+  padding: 10px;
+  /* Add some space between bio and profile picture */
+  background-color: #333333;
+  margin: 2px;
+  font-size: 18px;
+}
+
+.profile-picture {
+  flex: 1; /* Take up remaining space */
+  text-align: right; /* Align the profile picture to the right */
+}
+
+.profile-picture img {
+  width: 500px;
+  height: 290px;
+  object-fit: cover/* Ensure the image fits within its container */
+}
+
+.home-title {
+  text-align: center; /* Center the title */
+  font-family: 'Roboto', sans-serif; /* Use Roboto Thin font */
+  font-weight: 700; /* Use font weight 100 for Roboto Thin */
+  font-size: 40px;
+}
+.home-subtitle {
+  text-align: center; /* Center the title */
+  background-color: #000000;
+  color: #3498db;
+  font-size: 24px;
+  padding: 3px;
+  font-family: 'Roboto', sans-serif; /* Use Roboto Thin font */
+  font-weight: 700; /* Use font weight 100 for Roboto Thin */
+}

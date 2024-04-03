@@ -1,0 +1,60 @@
+/* PDFViewer.css */
+
+.pdf-viewer {
+  position: relative;
+  width: 100%;
+  max-width: 784px;
+  height: 600px;
+  border: 8px solid #ccc;
+  margin: 0 auto;
+  overflow-y: auto;
+}
+
+.pdf-title {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  color: #111111;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  z-index: 999;
+}
+
+.pdf-document {
+  height: 1200px;
+  width: 800px;
+  padding: 1px;
+}
+
+.viewer-page {
+  border: 10px solid #ccc;
+  height: 720px;
+  width: 750px;
+  margin-bottom: 2px; /* Add some spacing between pages */
+  z-index: 998;
+}
+
+.pdf-page {
+  border: 10px #111111;
+  z-index: 998;
+  margin: 2px;
+}
+
+.page {
+  height: 1000px;
+  width: 750px;
+  border: 10px #111111;
+  z-index: 997;
+}
+
+.pdf-doc{
+  height: 1000px;
+  width: fit-content;
+  z-index: 997;
+}
+
+.viewer-page canvas {
+  max-width: 100%;
+  max-height: 100%;
+  /*height: auto;*/
+}
