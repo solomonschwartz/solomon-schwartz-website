@@ -51,3 +51,49 @@
   font-family: 'Roboto', sans-serif; /* Use Roboto Thin font */
   font-weight: 700; /* Use font weight 100 for Roboto Thin */
 }
+
+/* Global styles for both desktop and mobile */
+
+/* Styles specific to desktop */
+.desktop-only {
+  display: block;
+}
+.mobile-only {
+  display: none;
+}
+
+/* Mobile-specific styles */
+@media screen and (max-width: 768px) {
+  /* Styles for screens up to 768px (typical tablet and mobile screens) */
+  #home {
+    padding: 20px;
+  }
+
+  .bio {
+    font-size: 16px;
+  }
+
+  .profile-picture img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .home-title {
+    font-size: 30px;
+  }
+
+  .home-subtitle {
+    font-size: 20px;
+  }
+
+  /* Hide desktop-specific elements */
+  .desktop-only {
+    display: none;
+  }
+  /* Show mobile-specific elements */
+  .mobile-only {
+    display: block;
+  }
+}
