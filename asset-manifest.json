@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.9843c150.css",
-    "main.js": "/static/js/main.e58f51ca.js",
+    "main.css": "/static/css/main.c70c84b8.css",
+    "main.js": "/static/js/main.373b1baa.js",
     "static/js/453.3b9f585c.chunk.js": "/static/js/453.3b9f585c.chunk.js",
     "static/media/Supply and Demand Below Zero.pdf": "/static/media/Supply and Demand Below Zero.244e1c17cb9f7dde90ac.pdf",
     "static/media/Quicksort.gif": "/static/media/Quicksort.02bff2671818dd8868f5.gif",
@@ -14,12 +14,12 @@
     "static/media/QuickPivot.pdf": "/static/media/QuickPivot.3c024c6242c3dea1f20c.pdf",
     "static/media/supply_zero.png": "/static/media/supply_zero.222c444d6fcbdc421d9d.png",
     "index.html": "/index.html",
-    "main.9843c150.css.map": "/static/css/main.9843c150.css.map",
-    "main.e58f51ca.js.map": "/static/js/main.e58f51ca.js.map",
+    "main.c70c84b8.css.map": "/static/css/main.c70c84b8.css.map",
+    "main.373b1baa.js.map": "/static/js/main.373b1baa.js.map",
     "453.3b9f585c.chunk.js.map": "/static/js/453.3b9f585c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9843c150.css",
-    "static/js/main.e58f51ca.js"
+    "static/css/main.c70c84b8.css",
+    "static/js/main.373b1baa.js"
   ]
 }
