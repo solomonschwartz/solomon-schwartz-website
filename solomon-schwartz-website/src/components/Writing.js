@@ -36,7 +36,6 @@ const Writing = () => {
       description: 'Using a pre-model, we can determine which kernels to run through a given image in the input layer of ImageNet and skip' +
           'any kernels that will have no activation on the given image.',
       image: require('../files/imagenet.jpeg'),
-      file: require('../files/Supply and Demand Below Zero.pdf')
     }
 
     // Add more papers as needed
