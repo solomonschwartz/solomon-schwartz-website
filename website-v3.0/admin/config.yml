@@ -1,0 +1,29 @@
+backend:
+  name: github
+  repo: yourusername/yourrepo  # Replace with your GitHub repo
+  branch: main
+  auth_scope: repo
+  site_id: "your-netlify-site-id"
+  auth_url: https://api.netlify.com
+  auth_endpoint: auth
+  media_folder: "assets/uploads"
+  collections:
+    - name: "posts"
+      label: "Blog Posts"
+      folder: "posts"
+      create: true
+      format: "markdown"
+      slug: "{{slug}}"
+      fields:
+        - { name: "title", label: "Title", widget: "string" }
+        - { name: "date", label: "Date", widget: "datetime", format: "YYYY-MM-DD" }
+        - { name: "body", label: "Content", widget: "markdown" }
+    - name: "videos"
+      label: "Videos"
+      folder: "_videos"
+      create: true
+      format: "yaml"
+      slug: "{{slug}}"
+      fields:
+        - { name: "title", label: "Video Title", widget: "string" }
+        - { name: "youtube", label: "YouTube URL", widget: "string" }
