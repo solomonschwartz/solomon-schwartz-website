@@ -6,6 +6,7 @@ backend:
   site_id: "0f697fdc-75e9-45b4-870a-95435f8da758"  # Netlify Site ID (for Identity)
   auth_url: https://api.netlify.com
   auth_endpoint: auth
+  login_redirect: "/"
 
 media_folder: "assets/uploads"  # Folder in your repo for media uploads
 public_folder: "/assets/uploads"  # URL path for media (publicly accessible)
