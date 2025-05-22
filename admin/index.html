@@ -1,15 +1,20 @@
-<!-- admin/index.html (or the page served at /admin) -->
-<script>
+<script type="module">
+  import { createAuth0Client } from 'https://cdn.skypack.dev/@auth0/auth0-spa-js';
+
   document.addEventListener('DOMContentLoaded', async () => {
-    const auth0 = await createAuth0Client({ /* ...Domain, ClientID, etc... */ });
+    const auth0 = await createAuth0Client({
+        domain: 'dev-m5hthz5fslmknhxt.us.auth0.com',
+        client_id: 'OGXc8XyXVGkRT9JySuUVWITDgxB259wT',
+        cacheLocation: 'localstorage',
+        useRefreshTokens: true
+    });
+
     const isAuthenticated = await auth0.isAuthenticated();
     if (!isAuthenticated) {
-      // Not logged in, start Auth0 login (redirects to Auth0 Universal Login)
       await auth0.loginWithRedirect({
         redirect_uri: window.location.origin + '/admin/dashboard.html'
       });
     } else {
-      // Already logged in (session active), go directly to dashboard
       window.location.href = '/admin/dashboard.html';
     }
   });
