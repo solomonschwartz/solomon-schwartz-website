@@ -3,7 +3,7 @@ backend:
   repo: solomonschwartz/solomon-schwartz-website  # Your GitHub repository
   branch: main  # Your branch (typically main)
   auth_scope: repo  # Permissions for OAuth
-  site_id: "0f697fdc-75e9-45b4-870a-95435f8da758"  # You can leave this blank if not using Netlify Identity
+  site_id: "0f697fdc-75e9-45b4-870a-95435f8da758"  # Netlify Site ID (for Identity)
   auth_url: https://api.netlify.com
   auth_endpoint: auth
 
@@ -20,7 +20,7 @@ collections:
     label: "Blog Posts"
     folder: "posts"  # Folder where blog posts will be stored
     create: true  # Allow creating new blog posts
-    format: "markdown"  # Use markdown for posts
+    format: "frontmatter"  # Use markdown for posts
     slug: "{{slug}}"  # Automatically generate slugs from post titles
     fields:
       - { name: "title", label: "Title", widget: "string" }
