@@ -1,39 +1,37 @@
 backend:
   name: github
   repo: solomonschwartz/solomon-schwartz-website  # Your GitHub repository
-  branch: main  # Your branch (typically main)
-  auth_scope: repo  # Permissions for OAuth
-#  site_id: "0f697fdc-75e9-45b4-870a-95435f8da758"  # Netlify Site ID (for Identity)
-  auth_url: https://api.netlify.com
-  auth_endpoint: auth
-  login_redirect: "/"
+  branch: main  # Branch where content will be committed
 
-media_folder: "assets/uploads"  # Folder in your repo for media uploads
-public_folder: "/assets/uploads"  # URL path for media (publicly accessible)
+media_folder: "assets/uploads"  # Repo path for uploaded files
+public_folder: "/assets/uploads"  # Public URL path for those files
 
 media_library:
-  name: "file"  # Use the built-in file uploader
+  name: file
   config:
-    multiple: true  # Allow uploading multiple files at once
+    multiple: true
 
 collections:
   - name: "posts"
     label: "Blog Posts"
-    folder: "posts"  # Folder where blog posts will be stored
-    create: true  # Allow creating new blog posts
-    format: "frontmatter"  # Use markdown for posts
-    slug: "{{slug}}"  # Automatically generate slugs from post titles
+    folder: "posts"
+    create: true
+    format: "frontmatter"
+    slug: "{{slug}}"
     fields:
       - { name: "title", label: "Title", widget: "string" }
-      - { name: "date", label: "Date", widget: "datetime", format: "YYYY-MM-DD" }
-      - { name: "body", label: "Content", widget: "markdown" }
+      - { name: "date", label: "Date", widget: "datetime", format: "YYYY-MM-DD HH:mm", default: "" }
+      - { name: "description", label: "Description", widget: "string", required: false }
+      - { name: "body", label: "Body", widget: "markdown" }
 
   - name: "videos"
     label: "Videos"
-    folder: "_videos"  # Folder for storing video data (YAML format)
-    create: true  # Allow adding new videos
-    format: "yaml"  # Use YAML format for video entries
-    slug: "{{slug}}"  # Slug for video URLs
+    folder: "_videos"
+    create: true
+    format: "yaml"
+    extension: "yaml"
+    slug: "{{slug}}"
     fields:
       - { name: "title", label: "Video Title", widget: "string" }
-      - { name: "youtube", label: "YouTube URL", widget: "string" }
+      - { name: "url", label: "YouTube URL", widget: "string" }
+      - { name: "description", label: "Description", widget: "text", required: false }

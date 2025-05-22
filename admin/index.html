@@ -1,14 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Content Manager</title>
-</head>
-<body>
-  <script src="https://cdn.jsdelivr.net/npm/netlify-cms@2.10.0/dist/netlify-cms.js"></script>
-  <script>
-    CMS.init();
-  </script>
-</body>
-</html>
+<!-- admin/index.html (or the page served at /admin) -->
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const auth0 = await createAuth0Client({ /* ...Domain, ClientID, etc... */ });
+    const isAuthenticated = await auth0.isAuthenticated();
+    if (!isAuthenticated) {
+      // Not logged in, start Auth0 login (redirects to Auth0 Universal Login)
+      await auth0.loginWithRedirect({
+        redirect_uri: window.location.origin + '/admin/dashboard.html'
+      });
+    } else {
+      // Already logged in (session active), go directly to dashboard
+      window.location.href = '/admin/dashboard.html';
+    }
+  });
+</script>
