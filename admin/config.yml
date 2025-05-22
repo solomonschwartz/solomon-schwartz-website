@@ -1,29 +1,38 @@
 backend:
   name: github
-  repo: solomonschwartz/solomon-schwartz-website # Replace with your GitHub repo
-  branch: main
-  auth_scope: repo
-  site_id: "your-netlify-site-id"
+  repo: solomonschwartz/solomon-schwartz-website  # Your GitHub repository
+  branch: main  # Your branch (typically main)
+  auth_scope: repo  # Permissions for OAuth
+  site_id: "your-netlify-site-id"  # You can leave this blank if not using Netlify Identity
   auth_url: https://api.netlify.com
   auth_endpoint: auth
-  media_folder: "assets/uploads"
-  collections:
-    - name: "posts"
-      label: "Blog Posts"
-      folder: "posts"
-      create: true
-      format: "markdown"
-      slug: "{{slug}}"
-      fields:
-        - { name: "title", label: "Title", widget: "string" }
-        - { name: "date", label: "Date", widget: "datetime", format: "YYYY-MM-DD" }
-        - { name: "body", label: "Content", widget: "markdown" }
-    - name: "videos"
-      label: "Videos"
-      folder: "_videos"
-      create: true
-      format: "yaml"
-      slug: "{{slug}}"
-      fields:
-        - { name: "title", label: "Video Title", widget: "string" }
-        - { name: "youtube", label: "YouTube URL", widget: "string" }
+
+media_folder: "assets/uploads"  # Folder in your repo for media uploads
+public_folder: "/assets/uploads"  # URL path for media (publicly accessible)
+
+media_library:
+  name: "file"  # Use the built-in file uploader
+  config:
+    multiple: true  # Allow uploading multiple files at once
+
+collections:
+  - name: "posts"
+    label: "Blog Posts"
+    folder: "posts"  # Folder where blog posts will be stored
+    create: true  # Allow creating new blog posts
+    format: "markdown"  # Use markdown for posts
+    slug: "{{slug}}"  # Automatically generate slugs from post titles
+    fields:
+      - { name: "title", label: "Title", widget: "string" }
+      - { name: "date", label: "Date", widget: "datetime", format: "YYYY-MM-DD" }
+      - { name: "body", label: "Content", widget: "markdown" }
+
+  - name: "videos"
+    label: "Videos"
+    folder: "_videos"  # Folder for storing video data (YAML format)
+    create: true  # Allow adding new videos
+    format: "yaml"  # Use YAML format for video entries
+    slug: "{{slug}}"  # Slug for video URLs
+    fields:
+      - { name: "title", label: "Video Title", widget: "string" }
+      - { name: "youtube", label: "YouTube URL", widget: "string" }
