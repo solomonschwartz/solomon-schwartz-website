@@ -5,7 +5,7 @@ let auth0 = null;
 async function configureClient() {
   auth0 = await createAuth0Client({
     domain: 'dev-m5hthz5fslmknhxt.us.auth0.com',
-    client_id: 'OGXc8XyXVGkRT9JySuUVWITDgxB259wT',
+    clientId: 'OGXc8XyXVGkRT9JySuUVWITDgxB259wT',
     redirect_uri: window.location.origin + '/admin/dashboard.html',
     cacheLocation: 'localstorage',
     useRefreshTokens: true
