@@ -42,8 +42,12 @@ import createAuth0Client from 'https://cdn.skypack.dev/@auth0/auth0-spa-js';
     login: user?.nickname || user?.email || 'editor'
   }));
 
-  // Load Netlify CMS
-  const script = document.createElement('script');
-  script.src = 'https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js';
-  document.body.appendChild(script);
+  // // Load Netlify CMS
+  // const script = document.createElement('script');
+  // script.src = 'https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js';
+  // document.body.appendChild(script);
+
+    // ✅ No CMS injection script here — you're using a custom UI instead
+    document.getElementById('cms').innerText = "Authenticated. You can now create content.";
+
 })();

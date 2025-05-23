@@ -4,14 +4,96 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-50 text-gray-800">
-  <!-- Optional: add a heading or loader -->
-  <div class="flex items-center justify-center min-h-screen">
-    <div id="cms" class="w-full max-w-4xl"></div>
-  </div>
+<body class="bg-gray-100 text-gray-800">
+  <header class="bg-white shadow p-4 flex justify-between items-center">
+    <h1 class="text-2xl font-semibold">Admin Dashboard</h1>
+    <button id="logoutBtn" class="text-sm text-red-600 hover:underline">Logout</button>
+  </header>
+
+  <main class="p-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <!-- Blog Post Uploader -->
+      <section class="bg-white rounded-lg p-6 shadow">
+        <h2 class="text-xl font-semibold mb-4">Add Blog Post</h2>
+        <form id="blogForm" class="space-y-4">
+          <input type="text" id="blogTitle" placeholder="Title" class="w-full border p-2 rounded" required />
+          <input type="date" id="blogDate" class="w-full border p-2 rounded" required />
+          <textarea id="blogBody" placeholder="Write your content here..." class="w-full border p-2 rounded h-40" required></textarea>
+          <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Upload Post</button>
+        </form>
+      </section>
+
+      <!-- Video Uploader -->
+      <section class="bg-white rounded-lg p-6 shadow">
+        <h2 class="text-xl font-semibold mb-4">Add Video</h2>
+        <form id="videoForm" class="space-y-4">
+          <input type="text" id="videoTitle" placeholder="Video Title" class="w-full border p-2 rounded" required />
+          <input type="url" id="videoURL" placeholder="YouTube URL" class="w-full border p-2 rounded" required />
+          <textarea id="videoDescription" placeholder="Optional description..." class="w-full border p-2 rounded h-20"></textarea>
+          <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Upload Video</button>
+        </form>
+      </section>
+
+    </div>
+  </main>
 
   <!-- Auth + CMS bootstrap -->
   <script type="module" src="./dashboard.js"></script>
+
+  <script>
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.clear();
+      window.location.href = '/admin';
+    });
+
+    document.getElementById('blogForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const title = document.getElementById('blogTitle').value;
+      const date = document.getElementById('blogDate').value;
+      const body = document.getElementById('blogBody').value;
+
+      const content = `---\ntitle: "${title}"\ndate: ${date}\n---\n\n${body}`;
+      const filename = `${title.toLowerCase().replace(/\s+/g, '-')}.md`;
+
+      await uploadToGitHub('posts', filename, content);
+      alert('Blog post uploaded!');
+    });
+
+    document.getElementById('videoForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const title = document.getElementById('videoTitle').value;
+      const url = document.getElementById('videoURL').value;
+      const description = document.getElementById('videoDescription').value;
+
+      const content = `title: "${title}"\nyoutube: "${url}"\ndescription: "${description}"`;
+      const filename = `${title.toLowerCase().replace(/\s+/g, '-')}.yaml`;
+
+      await uploadToGitHub('_videos', filename, content);
+      alert('Video uploaded!');
+    });
+
+    async function uploadToGitHub(folder, filename, content) {
+      const token = JSON.parse(localStorage.getItem('netlify-cms-user')).token;
+      const url = `https://api.github.com/repos/solomonschwartz/solomon-schwartz-website/contents/${folder}/${filename}`;
+      const message = `Add ${filename}`;
+      const encodedContent = btoa(unescape(encodeURIComponent(content)));
+
+      await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `token ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message,
+          content: encodedContent,
+          branch: 'main'
+        })
+      });
+    }
+  </script>
 </body>
 </html>
