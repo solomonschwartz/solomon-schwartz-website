@@ -11,7 +11,7 @@ import createAuth0Client from 'https://cdn.skypack.dev/@auth0/auth0-spa-js';
     }
   });
 
-  // 🔁 Handle Auth0 redirect (if coming from login)
+  // Complete the login redirect flow if needed
   if (window.location.search.includes('code=') && window.location.search.includes('state=')) {
     try {
       await auth0.handleRedirectCallback();
@@ -24,30 +24,25 @@ import createAuth0Client from 'https://cdn.skypack.dev/@auth0/auth0-spa-js';
     }
   }
 
-  // 🔒 Check if user is authenticated
-  const isAuthenticated = await auth0.isAuthenticated();
-  if (!isAuthenticated) {
-    // 🚫 Not logged in – kick back to login page
+  // Check if user is authenticated
+  const user = await auth0.getUser();
+  if (!user) {
     window.location.href = '/admin/';
     return;
   }
 
-  // ✅ Logged in – continue
-  const user = await auth0.getUser();
+  // Logged in
   const token = await auth0.getTokenSilently();
 
   console.log("Logged in as:", user?.email || user?.nickname);
 
-  // Inject GitHub token into Netlify CMS
-  const cmsAuth = {
+  localStorage.setItem('netlify-cms-user', JSON.stringify({
     backendName: 'github',
     token,
     login: user?.nickname || user?.email || 'editor'
-  };
+  }));
 
-  localStorage.setItem('netlify-cms-user', JSON.stringify(cmsAuth));
-
-  // Load CMS after authentication
+  // Load Netlify CMS
   const script = document.createElement('script');
   script.src = 'https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js';
   document.body.appendChild(script);
