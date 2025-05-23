@@ -1,7 +1,7 @@
-import createAuth0Client from 'https://cdn.skypack.dev/@auth0/auth0-spa-js';
+import * as Auth0 from 'https://cdn.skypack.dev/@auth0/auth0-spa-js';
 
 (async () => {
-  const auth0 = await createAuth0Client({
+  const auth0 = await Auth0.createAuth0Client({
     domain: 'dev-m5hthz5fslmknhxt.us.auth0.com',
     clientId: 'OGXc8XyXVGkRT9JySuUVWITDgxB259wT',
     cacheLocation: 'localstorage',
@@ -74,7 +74,14 @@ import createAuth0Client from 'https://cdn.skypack.dev/@auth0/auth0-spa-js';
   }
 
   async function uploadToGitHub(folder, filename, content) {
-    const token = JSON.parse(localStorage.getItem('netlify-cms-user')).token;
+    const cmsUser = JSON.parse(localStorage.getItem('netlify-cms-user'));
+    if (!cmsUser || !cmsUser.token) {
+      alert("Not authenticated. Please log in again.");
+      window.location.href = "/admin";
+      return;
+    }
+
+    const token = cmsUser.token;
     const url = `https://api.github.com/repos/solomonschwartz/solomon-schwartz-website/contents/${folder}/${filename}`;
     const message = `Add ${filename}`;
     const encodedContent = btoa(unescape(encodeURIComponent(content)));
@@ -98,4 +105,5 @@ import createAuth0Client from 'https://cdn.skypack.dev/@auth0/auth0-spa-js';
       alert("Upload failed. Check the console.");
     }
   }
+
 })();
