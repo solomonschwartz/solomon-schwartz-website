@@ -1,37 +1,34 @@
-import { createAuth0Client } from 'https://cdn.skypack.dev/@auth0/auth0-spa-js';
+import createAuth0Client from 'https://cdn.skypack.dev/@auth0/auth0-spa-js';
 
 let auth0 = null;
 
-document.addEventListener('DOMContentLoaded', async () => {
-  // Initialize Auth0
+async function configureClient() {
   auth0 = await createAuth0Client({
     domain: 'dev-m5hthz5fslmknhxt.us.auth0.com',
     client_id: 'OGXc8XyXVGkRT9JySuUVWITDgxB259wT',
+    redirect_uri: window.location.origin + '/admin/dashboard.html',
     cacheLocation: 'localstorage',
     useRefreshTokens: true
   });
+}
 
-  // Check if already logged in
+window.addEventListener('load', async () => {
+  await configureClient();
+
   const isAuthenticated = await auth0.isAuthenticated();
+
   if (isAuthenticated) {
+    // Already logged in, go straight to dashboard
     window.location.href = '/admin/dashboard.html';
     return;
   }
 
-  // Enable the login button only after auth0 is ready
-  const btn = document.getElementById('loginBtn');
-  btn.disabled = false;
-  btn.innerText = "Log in with GitHub";
+  // Not logged in – enable button
+  const loginBtn = document.getElementById('loginBtn');
+  loginBtn.disabled = false;
+  loginBtn.innerText = 'Log in with GitHub';
 
-  // Handle click
-  btn.addEventListener('click', async () => {
-    try {
-      await auth0.loginWithRedirect({
-        redirect_uri: window.location.origin + '/admin/dashboard.html'
-      });
-    } catch (e) {
-      console.error("Login failed:", e);
-      alert("Login failed: " + e.message);
-    }
+  loginBtn.addEventListener('click', async () => {
+    await auth0.loginWithRedirect();
   });
 });
