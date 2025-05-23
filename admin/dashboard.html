@@ -40,60 +40,6 @@
     </div>
   </main>
 
-  <!-- Auth + CMS bootstrap -->
   <script type="module" src="./dashboard.js"></script>
-
-  <script>
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      localStorage.clear();
-      window.location.href = '/admin';
-    });
-
-    document.getElementById('blogForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const title = document.getElementById('blogTitle').value;
-      const date = document.getElementById('blogDate').value;
-      const body = document.getElementById('blogBody').value;
-
-      const content = `---\ntitle: "${title}"\ndate: ${date}\n---\n\n${body}`;
-      const filename = `${title.toLowerCase().replace(/\s+/g, '-')}.md`;
-
-      await uploadToGitHub('posts', filename, content);
-      alert('Blog post uploaded!');
-    });
-
-    document.getElementById('videoForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const title = document.getElementById('videoTitle').value;
-      const url = document.getElementById('videoURL').value;
-      const description = document.getElementById('videoDescription').value;
-
-      const content = `title: "${title}"\nyoutube: "${url}"\ndescription: "${description}"`;
-      const filename = `${title.toLowerCase().replace(/\s+/g, '-')}.yaml`;
-
-      await uploadToGitHub('_videos', filename, content);
-      alert('Video uploaded!');
-    });
-
-    async function uploadToGitHub(folder, filename, content) {
-      const token = JSON.parse(localStorage.getItem('netlify-cms-user')).token;
-      const url = `https://api.github.com/repos/solomonschwartz/solomon-schwartz-website/contents/${folder}/${filename}`;
-      const message = `Add ${filename}`;
-      const encodedContent = btoa(unescape(encodeURIComponent(content)));
-
-      await fetch(url, {
-        method: 'PUT',
-        headers: {
-          'Authorization': `token ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          message,
-          content: encodedContent,
-          branch: 'main'
-        })
-      });
-    }
-  </script>
 </body>
 </html>

@@ -11,7 +11,6 @@ import createAuth0Client from 'https://cdn.skypack.dev/@auth0/auth0-spa-js';
     }
   });
 
-  // Complete the login redirect flow if needed
   if (window.location.search.includes('code=') && window.location.search.includes('state=')) {
     try {
       await auth0.handleRedirectCallback();
@@ -24,17 +23,13 @@ import createAuth0Client from 'https://cdn.skypack.dev/@auth0/auth0-spa-js';
     }
   }
 
-  // Check if user is authenticated
   const user = await auth0.getUser();
   if (!user) {
     window.location.href = '/admin/';
     return;
   }
 
-  // Logged in
   const token = await auth0.getTokenSilently();
-
-  console.log("Logged in as:", user?.email || user?.nickname);
 
   localStorage.setItem('netlify-cms-user', JSON.stringify({
     backendName: 'github',
@@ -42,12 +37,65 @@ import createAuth0Client from 'https://cdn.skypack.dev/@auth0/auth0-spa-js';
     login: user?.nickname || user?.email || 'editor'
   }));
 
-  // // Load Netlify CMS
-  // const script = document.createElement('script');
-  // script.src = 'https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js';
-  // document.body.appendChild(script);
+  initAdminDashboard();
 
-    // ✅ No CMS injection script here — you're using a custom UI instead
-    document.getElementById('cms').innerText = "Authenticated. You can now create content.";
+  function initAdminDashboard() {
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.clear();
+      window.location.href = '/admin';
+    });
 
+    document.getElementById('blogForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const title = document.getElementById('blogTitle').value;
+      const date = document.getElementById('blogDate').value;
+      const body = document.getElementById('blogBody').value;
+
+      const content = `---\ntitle: "${title}"\ndate: ${date}\n---\n\n${body}`;
+      const filename = `${title.toLowerCase().replace(/\s+/g, '-')}.md`;
+
+      await uploadToGitHub('posts', filename, content);
+      alert('Blog post uploaded!');
+      window.location.href = '/blog';
+    });
+
+    document.getElementById('videoForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const title = document.getElementById('videoTitle').value;
+      const url = document.getElementById('videoURL').value;
+      const description = document.getElementById('videoDescription').value;
+
+      const content = `title: "${title}"\nyoutube: "${url}"\ndescription: "${description}"`;
+      const filename = `${title.toLowerCase().replace(/\s+/g, '-')}.yaml`;
+
+      await uploadToGitHub('_videos', filename, content);
+      alert('Video uploaded!');
+    });
+  }
+
+  async function uploadToGitHub(folder, filename, content) {
+    const token = JSON.parse(localStorage.getItem('netlify-cms-user')).token;
+    const url = `https://api.github.com/repos/solomonschwartz/solomon-schwartz-website/contents/${folder}/${filename}`;
+    const message = `Add ${filename}`;
+    const encodedContent = btoa(unescape(encodeURIComponent(content)));
+
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `token ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message,
+        content: encodedContent,
+        branch: 'main'
+      })
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      console.error("GitHub upload failed:", error);
+      alert("Upload failed. Check the console.");
+    }
+  }
 })();
