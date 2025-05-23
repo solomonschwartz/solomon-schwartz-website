@@ -1,0 +1,19 @@
+import { createAuth0Client } from 'https://cdn.skypack.dev/@auth0/auth0-spa-js';
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const auth0 = await createAuth0Client({
+    domain: 'dev-m5hthz5fslmknhxt.us.auth0.com',
+    client_id: 'OGXc8XyXVGkRT9JySuUVWITDgxB259wT',
+    cacheLocation: 'localstorage',
+    useRefreshTokens: true
+  });
+
+  const isAuthenticated = await auth0.isAuthenticated();
+  if (!isAuthenticated) {
+    await auth0.loginWithRedirect({
+      redirect_uri: window.location.origin + '/admin/dashboard.html'
+    });
+  } else {
+    window.location.href = '/admin/dashboard.html';
+  }
+});
