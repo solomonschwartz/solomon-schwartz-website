@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "tailwindcss build ./styles/tailwind.css -o ./styles/output.css",
-    "deploy": "npm run build --prefix website-vite && cp -r website-vite/dist/* ."
+    "deploy": "npm run build --prefix website-v4.0 && cp -r website-v4.0/dist/* ."
   },
   "devDependencies": {
     "postcss-cli": "^8.3.1"
