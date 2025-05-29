@@ -3,12 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
-    "tailwindcss": "^2.2.19",
+    "@auth0/auth0-spa-js": "^2.1.3",
+    "autoprefixer": "^10.2.6",
     "postcss": "^8.3.6",
-    "autoprefixer": "^10.2.6"
+    "tailwindcss": "^2.2.19"
   },
   "scripts": {
-    "build": "tailwindcss build ./styles/tailwind.css -o ./styles/output.css"
+    "build": "tailwindcss build ./styles/tailwind.css -o ./styles/output.css",
+    "deploy": "npm run build --prefix website-vite && cp -r website-vite/dist/* ."
   },
   "devDependencies": {
     "postcss-cli": "^8.3.1"

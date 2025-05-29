@@ -1,9 +1,9 @@
-import * as Auth0 from 'https://cdn.skypack.dev/@auth0/auth0-spa-js';
+import { createAuth0Client } from 'https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.esm.js'
 
 (async () => {
-  const auth0 = await Auth0.createAuth0Client({
+  const auth0 = await createAuth0Client({
     domain: 'dev-m5hthz5fslmknhxt.us.auth0.com',
-    clientId: 'OGXc8XyXVGkRT9JySuUVWITDgxB259wT',
+    clientId: 'FVUDfy6PvGFHOaOtazaAP67FfuF74oL8',
     cacheLocation: 'localstorage',
     useRefreshTokens: true,
     authorizationParams: {
