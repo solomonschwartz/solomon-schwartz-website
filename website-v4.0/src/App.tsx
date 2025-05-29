@@ -14,7 +14,7 @@ function App() {
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/videos" element={<Videos />} />
         <Route path="/admin" element={<AdminLogin />} />
-        <Route path="/admin/dashboard.html" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+        <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );
