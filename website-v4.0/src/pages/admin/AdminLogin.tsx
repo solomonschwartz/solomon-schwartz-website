@@ -4,7 +4,7 @@ const AdminLogin: React.FC = () => {
   const handleLogin = () => {
     const domain = "dev-m5hthz5fslmknhxt.us.auth0.com";
     const clientId = "FVUDfy6PvGFHOaOtazaAP67FfuF74oL8";
-    const redirectUri = encodeURIComponent(window.location.origin + '/admin/dashboard');
+    const redirectUri = encodeURIComponent(window.location.origin + '/admin/dashboard.html');
     const scope = encodeURIComponent("openid profile email");
     const responseType = "code";
 
