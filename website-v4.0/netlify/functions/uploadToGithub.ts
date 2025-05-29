@@ -2,6 +2,13 @@ import { Handler } from '@netlify/functions';
 import { Octokit } from '@octokit/rest';
 
 const handler: Handler = async (event) => {
+  if (event.httpMethod !== 'POST') {
+    return {
+      statusCode: 405,
+      body: 'Method Not Allowed',
+    };
+  }
+
   try {
     const { folder, filename, content, message } = JSON.parse(event.body || '{}');
 
@@ -12,50 +19,60 @@ const handler: Handler = async (event) => {
       };
     }
 
+    const path = `${folder}/${filename}`;
+    console.log('Uploading to GitHub:', path);
+
     const octokit = new Octokit({
       auth: process.env.GITHUB_TOKEN,
     });
 
-    const path = `${folder}/${filename}`;
-
-    // Declare sha as a mutable variable
-    let sha: string | undefined = undefined;
+    let sha: string | undefined;
 
     try {
-      const response = await octokit.repos.getContent({
+      const { data } = await octokit.repos.getContent({
         owner: 'solomonschwartz',
         repo: 'solomon-schwartz-website',
         path,
       });
 
-      if (!Array.isArray(response.data) && 'sha' in response.data) {
-        sha = response.data.sha;
+      if (!Array.isArray(data) && data.sha) {
+        sha = data.sha;
+        console.log(`Existing file found with sha: ${sha}`);
       }
-    } catch (error: any) {
-      if (error.status !== 404) {
-        throw error;
+    } catch (err: any) {
+      if (err.status === 404) {
+        console.log('No existing file found; creating new.');
+      } else {
+        console.error('Error checking file existence:', err);
+        throw err;
       }
-      // If file not found (404), that's fine — we'll create a new file
     }
 
-    await octokit.repos.createOrUpdateFileContents({
+    const response = await octokit.repos.createOrUpdateFileContents({
       owner: 'solomonschwartz',
       repo: 'solomon-schwartz-website',
       path,
-      message: message || `Upload ${filename}`,
+      message: message || `Update ${path}`,
       content: Buffer.from(content).toString('base64'),
-      sha, // If sha is undefined, GitHub creates the file
+      committer: {
+        name: 'Solomon Schwartz',
+        email: 'solomon@example.com',
+      },
+      sha,
     });
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ success: true }),
+      body: JSON.stringify({
+        success: true,
+        html_url: response.data.content?.html_url || '',
+      }),
     };
-  } catch (error: any) {
-    console.error('Upload error:', error);
+  } catch (err: any) {
+    console.error('Upload failed:', err.message);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: error.message || 'Unknown error' }),
+      body: JSON.stringify({ error: err.message }),
     };
   }
 };
