@@ -4,6 +4,7 @@ import Blogs from './pages/Blogs';
 import Videos from './pages/Videos';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/videos" element={<Videos />} />
         <Route path="/admin" element={<AdminLogin />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );

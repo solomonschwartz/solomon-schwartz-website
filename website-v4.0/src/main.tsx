@@ -5,7 +5,6 @@ import App from './App';
 import { Auth0Provider } from '@auth0/auth0-react';
 import './index.css';
 
-
 const domain = 'dev-m5hthz5fslmknhxt.us.auth0.com';
 const clientId = 'FVUDfy6PvGFHOaOtazaAP67FfuF74oL8';
 

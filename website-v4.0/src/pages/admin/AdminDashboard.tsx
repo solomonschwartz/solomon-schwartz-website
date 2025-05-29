@@ -6,7 +6,6 @@ const AdminDashboard = () => {
     isAuthenticated,
     isLoading,
     user,
-    loginWithRedirect,
     logout,
     getAccessTokenSilently,
   } = useAuth0();
@@ -85,8 +84,7 @@ const AdminDashboard = () => {
   }
 
   if (!isAuthenticated) {
-    loginWithRedirect();
-    return null;
+    return null; // Let ProtectedRoute handle redirect logic
   }
 
   return (
