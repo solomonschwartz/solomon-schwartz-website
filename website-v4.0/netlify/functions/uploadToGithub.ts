@@ -1,5 +1,9 @@
 import { Handler } from '@netlify/functions';
 import { Octokit } from '@octokit/rest';
+import dotenv from 'dotenv';
+
+// Load environment variables from .env if available (for local dev only)
+dotenv.config();
 
 const handler: Handler = async (event) => {
   if (event.httpMethod !== 'POST') {
@@ -20,11 +24,19 @@ const handler: Handler = async (event) => {
     }
 
     const path = `${folder}/${filename}`;
-    console.log('Uploading to GitHub:', path);
+    console.log('Uploading to path:', path);
 
-    const octokit = new Octokit({
-      auth: process.env.GITHUB_TOKEN,
-    });
+    const githubToken = process.env.GITHUB_TOKEN;
+
+    if (!githubToken) {
+      console.error('GITHUB_TOKEN is undefined.');
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: 'Missing GitHub token in environment' }),
+      };
+    }
+
+    const octokit = new Octokit({ auth: githubToken });
 
     let sha: string | undefined;
 
@@ -59,6 +71,7 @@ const handler: Handler = async (event) => {
         email: 'solomon@example.com',
       },
       sha,
+      branch: 'main',
     });
 
     return {
