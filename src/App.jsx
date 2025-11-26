@@ -17,8 +17,6 @@ const CONFIG = {
 // HOBBY GALLERY CONFIGURATION
 // ============================================
 // To add photos:
-// 1. Place images in /public/images/[hobby-name]/ folder
-// 2. Add entries below with the path and caption
 // Example: { url: "/images/cocktails/negroni.jpg", caption: "Friday night Negroni" }
 const HOBBY_DATA = {
   // Current Hobbies
@@ -95,6 +93,9 @@ const HOBBY_DATA = {
     photos: [
       { url: "/images/golf/IMG_5C2BFFE6511E-1.jpeg", caption: "" },
       { url: "/images/golf/IMG_9286.PNG", caption: "" },
+      { url: "/images/golf/IMG_CF0B0C277BF3-1.jpeg", caption: "" },
+      { url: "/images/golf/IMG_8751.PNG", caption: "" },
+      { url: "/images/golf/IMG_8747.PNG", caption: "" },
     ],
   },
   running: {
