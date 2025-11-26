@@ -1110,9 +1110,7 @@ const HomePage = ({ setCurrentPage }) => {
           marginTop: '1rem',
           fontWeight: 300,
         }}>
-          Building the future of healthcare @Palantir.
-          <br />
-          Yeshiva University Alum.
+          Currently building the future of healthcare @ Palantir.
         </p>
 
         <div className="scroll-indicator">
