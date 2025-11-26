@@ -29,9 +29,10 @@ const HOBBY_DATA = {
     description: "Favorite drinks currently are Moscow Mule, Mai Tai and Strawberry Daiquiri.",
     color: "#722f37",
     isCurrent: true,
-    // Add photos here:
     photos: [
-      // { url: "/images/cocktails/example.jpg", caption: "Caption here" },
+      { url: "/images/cocktails/IMG_8459.jpg", caption: "" },
+      { url: "/images/cocktails/IMG_8544.jpg", caption: "" },
+      { url: "/images/cocktails/IMG_8591.jpg", caption: "" },
     ],
     recipes: [
       {
@@ -55,9 +56,23 @@ const HOBBY_DATA = {
     description: "I mostly make chicken and rice bowls but if you're down to pay for a steak, I will happily cook that too.",
     color: "#8b7355",
     isCurrent: true,
-    // Add photos here:
     photos: [
-      // { url: "/images/cooking/example.jpg", caption: "Caption here" },
+      { url: "/images/cooking/IMG_0245.jpg", caption: "" },
+      { url: "/images/cooking/IMG_0313_Original.jpg", caption: "" },
+      { url: "/images/cooking/IMG_0517.jpg", caption: "" },
+      { url: "/images/cooking/IMG_0614.jpg", caption: "" },
+      { url: "/images/cooking/IMG_0615.jpg", caption: "" },
+      { url: "/images/cooking/IMG_6399.jpg", caption: "" },
+      { url: "/images/cooking/IMG_7381.jpg", caption: "" },
+      { url: "/images/cooking/IMG_7402.jpg", caption: "" },
+      { url: "/images/cooking/IMG_7494.jpg", caption: "" },
+      { url: "/images/cooking/IMG_7570.jpg", caption: "" },
+      { url: "/images/cooking/IMG_7923.jpg", caption: "" },
+      { url: "/images/cooking/IMG_7929.jpg", caption: "" },
+      { url: "/images/cooking/IMG_8032.jpg", caption: "" },
+      { url: "/images/cooking/IMG_8137.jpg", caption: "" },
+      { url: "/images/cooking/IMG_8138.jpg", caption: "" },
+      { url: "/images/cooking/IMG_8175.jpg", caption: "" },
     ],
   },
   radios: {
@@ -67,10 +82,7 @@ const HOBBY_DATA = {
     description: "I started off wondering why radios work and ended up building a couple for fun. I still don't have the answer so email me if you know.",
     color: "#1a2e44",
     isCurrent: true,
-    // Add photos here:
-    photos: [
-      // { url: "/images/radios/example.jpg", caption: "Caption here" },
-    ],
+    photos: [],
   },
   // Former Hobbies
   golf: {
@@ -80,9 +92,9 @@ const HOBBY_DATA = {
     description: "I once started a golf trip -1 so that's something I guess.",
     color: "#2d5a3d",
     isCurrent: false,
-    // Add photos here:
     photos: [
-      // { url: "/images/golf/example.jpg", caption: "Caption here" },
+      { url: "/images/golf/IMG_5C2BFFE6511E-1.jpeg", caption: "" },
+      { url: "/images/golf/IMG_9286.PNG", caption: "" },
     ],
   },
   running: {
@@ -92,9 +104,15 @@ const HOBBY_DATA = {
     description: "I trained for a marathon once and got screwed by COVID. Longest run to date: 19 miles on March 4, 2020. Mile PR: 5:31 — cannot remember the date as it was pre-Strava and pre-Map My Run.",
     color: "#4a5568",
     isCurrent: false,
-    // Add photos here:
     photos: [
-      // { url: "/images/running/example.jpg", caption: "Caption here" },
+      { url: "/images/running/IMG_5556.PNG", caption: "" },
+      { url: "/images/running/IMG_5993.jpg", caption: "" },
+      { url: "/images/running/IMG_6355.jpg", caption: "" },
+      { url: "/images/running/IMG_7099.jpg", caption: "" },
+      { url: "/images/running/IMG_7119.jpg", caption: "" },
+      { url: "/images/running/IMG_7843.jpg", caption: "" },
+      { url: "/images/running/IMG_7912.jpg", caption: "" },
+      { url: "/images/running/IMG_8463.PNG", caption: "" },
     ],
   },
   dryaging: {
@@ -104,9 +122,16 @@ const HOBBY_DATA = {
     description: "I hope to do this again once I have the fridge space. Highest ROI hobby I ever had 10/10.",
     color: "#8b4513",
     isCurrent: false,
-    // Add photos here:
     photos: [
-      // { url: "/images/dryaging/example.jpg", caption: "Caption here" },
+      { url: "/images/dryaging/IMG_6800.PNG", caption: "" },
+      { url: "/images/dryaging/IMG_6898.jpg", caption: "" },
+      { url: "/images/dryaging/IMG_7090.jpg", caption: "" },
+      { url: "/images/dryaging/IMG_7116.jpg", caption: "" },
+      { url: "/images/dryaging/IMG_7249.jpg", caption: "" },
+      { url: "/images/dryaging/IMG_7250.jpg", caption: "" },
+      { url: "/images/dryaging/IMG_7259.jpg", caption: "" },
+      { url: "/images/dryaging/IMG_7260.jpg", caption: "" },
+      { url: "/images/dryaging/IMG_7262.jpg", caption: "" },
     ],
   },
 };
@@ -431,12 +456,57 @@ const styles = `
     transform: translateY(0);
   }
 
+  /* Album cover style */
+  .album-cover {
+    position: relative;
+    aspect-ratio: 1;
+    max-width: 400px;
+    margin: 0 auto;
+    cursor: pointer;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(26, 46, 68, 0.2);
+    transition: all 0.4s ease;
+  }
+
+  .album-cover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 50px rgba(26, 46, 68, 0.3);
+  }
+
+  .album-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .album-cover-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(transparent 50%, rgba(26, 46, 68, 0.8));
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.5rem;
+    color: var(--color-cream);
+  }
+
+  .album-cover-text {
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
   .lightbox {
     position: fixed;
     inset: 0;
-    background: rgba(15, 28, 42, 0.95);
+    background: rgba(15, 28, 42, 0.98);
     z-index: 200;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 2rem;
@@ -450,31 +520,44 @@ const styles = `
     visibility: visible;
   }
 
-  .lightbox img {
+  .lightbox-image-container {
+    position: relative;
     max-width: 90%;
-    max-height: 85vh;
+    max-height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox img {
+    max-width: 100%;
+    max-height: 75vh;
     object-fit: contain;
   }
 
   .lightbox-close {
     position: absolute;
-    top: 2rem;
-    right: 2rem;
+    top: 1.5rem;
+    right: 1.5rem;
     color: var(--color-cream);
     background: none;
     border: none;
     cursor: pointer;
     padding: 0.5rem;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    z-index: 210;
+  }
+
+  .lightbox-close:hover {
+    opacity: 1;
   }
 
   .lightbox-caption {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
     color: var(--color-cream);
     font-family: 'Raleway', sans-serif;
     text-align: center;
+    margin-top: 1.5rem;
   }
 
   .lightbox-nav {
@@ -482,17 +565,19 @@ const styles = `
     top: 50%;
     transform: translateY(-50%);
     color: var(--color-cream);
-    background: none;
+    background: rgba(26, 46, 68, 0.5);
     border: none;
     cursor: pointer;
-    padding: 1rem;
-    font-size: 2rem;
+    padding: 1rem 0.75rem;
+    font-size: 1.5rem;
     opacity: 0.7;
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;
+    z-index: 210;
   }
 
   .lightbox-nav:hover {
     opacity: 1;
+    background: rgba(26, 46, 68, 0.8);
   }
 
   .lightbox-nav.prev {
@@ -501,6 +586,48 @@ const styles = `
 
   .lightbox-nav.next {
     right: 1rem;
+  }
+
+  .lightbox-counter {
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.8rem;
+    color: var(--color-cream);
+    opacity: 0.6;
+    margin-top: 0.75rem;
+  }
+
+  .lightbox-thumbnails {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    overflow-x: auto;
+    max-width: 90%;
+    padding: 0.5rem 0;
+  }
+
+  .lightbox-thumbnail {
+    width: 60px;
+    height: 45px;
+    flex-shrink: 0;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+    border: 2px solid transparent;
+  }
+
+  .lightbox-thumbnail:hover {
+    opacity: 0.8;
+  }
+
+  .lightbox-thumbnail.active {
+    opacity: 1;
+    border-color: var(--color-accent);
+  }
+
+  .lightbox-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .blog-post {
@@ -674,12 +801,8 @@ const Icons = {
     </svg>
   ),
   Running: () => (
-    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <circle cx="17" cy="4" r="2" />
-      <path d="M3 21h4l2-5" />
-      <path d="M9 16l2-3 3 1 3-4" />
-      <path d="M14 14l1 2h4" />
-      <path d="M5 21l3-7" />
+    <svg width="32" height="32" viewBox="0 -960 960 960" fill="currentColor">
+      <path d="m216-160-56-56 384-384H440v80h-80v-160h233q16 0 31 6t26 17l120 119q27 27 66 42t84 16v80q-62 0-112.5-19T718-476l-40-42-88 88 90 90-262 151-40-69 172-99-68-68-266 265Zm-96-280v-80h200v80H120ZM40-560v-80h200v80H40Zm739-80q-33 0-57-23.5T698-720q0-33 24-56.5t57-23.5q33 0 57 23.5t24 56.5q0 33-24 56.5T779-640Zm-659-40v-80h200v80H120Z"/>
     </svg>
   ),
   Meat: () => (
@@ -856,9 +979,9 @@ const Navigation = ({ currentPage, setCurrentPage }) => {
 };
 
 // ============================================
-// LIGHTBOX COMPONENT
+// LIGHTBOX COMPONENT (Carousel)
 // ============================================
-const Lightbox = ({ photos, currentIndex, isOpen, onClose, onPrev, onNext }) => {
+const Lightbox = ({ photos, currentIndex, isOpen, onClose, onPrev, onNext, setCurrentIndex }) => {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (!isOpen) return;
@@ -869,6 +992,18 @@ const Lightbox = ({ photos, currentIndex, isOpen, onClose, onPrev, onNext }) => 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose, onPrev, onNext]);
+
+  // Prevent body scroll when open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
   if (!photos || photos.length === 0) return null;
 
@@ -897,20 +1032,36 @@ const Lightbox = ({ photos, currentIndex, isOpen, onClose, onPrev, onNext }) => 
         </>
       )}
 
-      <img
-        src={currentPhoto?.url}
-        alt={currentPhoto?.caption || ''}
-        onClick={(e) => e.stopPropagation()}
-      />
+      <div className="lightbox-image-container" onClick={(e) => e.stopPropagation()}>
+        <img
+          src={currentPhoto?.url}
+          alt={currentPhoto?.caption || ''}
+        />
+      </div>
 
       {currentPhoto?.caption && (
         <div className="lightbox-caption">
           <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: '1.25rem' }}>
             {currentPhoto.caption}
           </p>
-          <p style={{ fontSize: '0.8rem', opacity: 0.7, marginTop: '0.5rem' }}>
-            {currentIndex + 1} / {photos.length}
-          </p>
+        </div>
+      )}
+
+      <div className="lightbox-counter">
+        {currentIndex + 1} / {photos.length}
+      </div>
+
+      {photos.length > 1 && (
+        <div className="lightbox-thumbnails" onClick={(e) => e.stopPropagation()}>
+          {photos.map((photo, index) => (
+            <div
+              key={index}
+              className={`lightbox-thumbnail ${index === currentIndex ? 'active' : ''}`}
+              onClick={() => setCurrentIndex(index)}
+            >
+              <img src={photo.url} alt="" />
+            </div>
+          ))}
         </div>
       )}
     </div>
@@ -1486,21 +1637,73 @@ const HobbyPage = ({ hobbyKey, setCurrentPage }) => {
         <div className="divider"></div>
 
         {hobby.photos && hobby.photos.length > 0 ? (
-          <div className="gallery-grid" style={{ marginTop: '2rem' }}>
-            {hobby.photos.map((photo, index) => (
-              <div
-                key={index}
-                className="gallery-item"
-                onClick={() => openLightbox(index)}
-              >
-                <img src={photo.url} alt={photo.caption || `${hobby.name} photo ${index + 1}`} />
-                {photo.caption && (
-                  <div className="gallery-item-caption">
-                    {photo.caption}
+          <div style={{ marginTop: '2rem' }}>
+            {/* Album Cover */}
+            <div
+              className="album-cover"
+              onClick={() => openLightbox(0)}
+            >
+              <img src={hobby.photos[0].url} alt={`${hobby.name} album`} />
+              <div className="album-cover-overlay">
+                <div className="album-cover-text">
+                  <Icons.Image />
+                  <span>View {hobby.photos.length} photo{hobby.photos.length > 1 ? 's' : ''}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Small preview grid */}
+            {hobby.photos.length > 1 && (
+              <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                gap: '0.5rem',
+                marginTop: '1rem',
+                flexWrap: 'wrap',
+              }}>
+                {hobby.photos.slice(1, 5).map((photo, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      width: '60px',
+                      height: '60px',
+                      cursor: 'pointer',
+                      opacity: 0.7,
+                      transition: 'opacity 0.3s ease',
+                      overflow: 'hidden',
+                    }}
+                    onClick={() => openLightbox(index + 1)}
+                    onMouseOver={(e) => e.currentTarget.style.opacity = 1}
+                    onMouseOut={(e) => e.currentTarget.style.opacity = 0.7}
+                  >
+                    <img
+                      src={photo.url}
+                      alt=""
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  </div>
+                ))}
+                {hobby.photos.length > 5 && (
+                  <div
+                    style={{
+                      width: '60px',
+                      height: '60px',
+                      cursor: 'pointer',
+                      background: colors.primary.DEFAULT,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: colors.cream.DEFAULT,
+                      fontFamily: "'Raleway', sans-serif",
+                      fontSize: '0.8rem',
+                    }}
+                    onClick={() => openLightbox(5)}
+                  >
+                    +{hobby.photos.length - 5}
                   </div>
                 )}
               </div>
-            ))}
+            )}
           </div>
         ) : (
           <div className="empty-gallery" style={{ marginTop: '2rem' }}>
@@ -1535,6 +1738,7 @@ const HobbyPage = ({ hobbyKey, setCurrentPage }) => {
         onClose={closeLightbox}
         onPrev={prevPhoto}
         onNext={nextPhoto}
+        setCurrentIndex={setCurrentPhotoIndex}
       />
     </div>
   );
