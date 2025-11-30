@@ -28,7 +28,7 @@ const HOBBY_DATA = {
     color: "#722f37",
     isCurrent: true,
     photos: [
-      { url: "/images/cocktails/IMG_8757.jpg", caption: "Flower and Fire Mule" },
+      { url: "/images/cocktails/IMG_8757.jpeg", caption: "Flower and Fire Mule" },
       { url: "/images/cocktails/IMG_8459.jpg", caption: "Espresso Martini" },
       { url: "/images/cocktails/IMG_8544.jpg", caption: "Watermelon Sugar" },
       { url: "/images/cocktails/IMG_8591.jpg", caption: "" },
