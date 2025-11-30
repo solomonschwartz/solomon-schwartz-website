@@ -28,8 +28,9 @@ const HOBBY_DATA = {
     color: "#722f37",
     isCurrent: true,
     photos: [
-      { url: "/images/cocktails/IMG_8459.jpg", caption: "" },
-      { url: "/images/cocktails/IMG_8544.jpg", caption: "" },
+      { url: "/images/cocktails/IMG_8757.jpg", caption: "Flower and Fire Mule" },
+      { url: "/images/cocktails/IMG_8459.jpg", caption: "Espresso Martini" },
+      { url: "/images/cocktails/IMG_8544.jpg", caption: "Watermelon Sugar" },
       { url: "/images/cocktails/IMG_8591.jpg", caption: "" },
     ],
     recipes: [
@@ -44,6 +45,16 @@ const HOBBY_DATA = {
           "2 dashes Angostura Bitters",
         ],
         instructions: "Shake all ingredients except ginger beer and bitters. Strain onto large ice cubes, pour ginger beer over the top until it reaches top of the glass, about 4-5 oz. Add 2 dashes Angostura bitters on top. Optional garnish with mint sprig or brûléed lime.",
+      },
+              {
+        name: "Watermelon Sugar",
+        ingredients: [
+          "2 oz Dark Jamaican Rum",
+          "1 oz Lime Juice",
+          "4 oz of watermelon juice",
+          "0.5 oz simple syrup",
+        ],
+        instructions: "Muddle fresh watermelon and strain until you have 4 oz of strained watermelon juice. Shake juice with other ingredients and pour over ice. Garnish with watermelon wedge.",
       },
     ],
   },
