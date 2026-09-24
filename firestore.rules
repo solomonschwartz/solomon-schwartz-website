@@ -1,0 +1,43 @@
+rules_version = '2';
+
+// Firestore security rules for solomonschwartz.com
+//
+// The site hides admin buttons in the browser, but that is NOT security:
+// anyone can sign in to this Firebase project with Google and call the
+// Firestore SDK directly. These rules are what actually protect the data.
+//
+// Deploy: Firebase console → Firestore Database → Rules → paste → Publish
+//   (or `firebase deploy --only firestore:rules` if you set up the CLI).
+// Test first with the "Rules Playground" button on that same page.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email in [
+          'shlomoschwartz01@gmail.com',
+          'solomonschwartz01@gmail.com'
+        ];
+    }
+
+    // Public site content: hobbies, timeline, resume, homepage.
+    // Everyone can read; only you can write.
+    match /artifacts/{appId}/public/data/{collection}/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Private per-user data: ledger, ledger config, streak tracker.
+    // Only you, and only your own documents.
+    match /artifacts/{appId}/users/{uid}/{rest=**} {
+      allow read, write: if isAdmin() && request.auth.uid == uid;
+    }
+
+    // Everything else is closed.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
