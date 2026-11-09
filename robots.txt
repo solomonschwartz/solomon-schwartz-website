@@ -1,0 +1,6 @@
+# robots.txt for solomonschwartz.com
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.solomonschwartz.com/sitemap.xml
