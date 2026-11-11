@@ -938,6 +938,10 @@ const SHBPage = ({ user }) => {
   const [showPicker, setShowPicker] = useState(false);
   const [customDt, setCustomDt] = useState('');
   const [confirmEnd, setConfirmEnd] = useState(false);
+  const [goalDays, setGoalDays] = useState(null);
+  const [showRemaining, setShowRemaining] = useState(false);
+  const [showGoalPicker, setShowGoalPicker] = useState(false);
+  const [customGoalInput, setCustomGoalInput] = useState('');
 
   const dbRef = () => doc(db, 'artifacts', appId, 'users', user.uid, 'shb', 'current');
 
@@ -945,6 +949,7 @@ const SHBPage = ({ user }) => {
     return onSnapshot(dbRef(), snap => {
       const d = snap.exists() ? snap.data() : {};
       setStreakStart(d.startedAt || null);
+      setGoalDays(d.goalDays || null);
       setLoading(false);
     });
   }, [user.uid]);
@@ -966,9 +971,25 @@ const SHBPage = ({ user }) => {
   const passedMs = MILESTONES.filter(m => elapsedDays >= m.days);
   const currentMs = passedMs[passedMs.length - 1] || null;
   const nextMs = MILESTONES.find(m => elapsedDays < m.days) || null;
-  const arcMaxDays = nextMs ? nextMs.days : 365;
+  const arcMaxDays = goalDays || (nextMs ? nextMs.days : 365);
   const arcProgress = Math.min(elapsedDays / arcMaxDays, 1);
   const arcMilestones = MILESTONES.filter(m => m.days <= arcMaxDays);
+  const goalRemainingMs = goalDays ? Math.max(0, (goalDays * 86400000) - elapsed) : 0;
+  const goalRemSec = Math.floor(goalRemainingMs / 1000);
+  const grDays = Math.floor(goalRemSec / 86400);
+  const grHrs = Math.floor((goalRemSec % 86400) / 3600);
+  const grMins = Math.floor((goalRemSec % 3600) / 60);
+  const grSecs = goalRemSec % 60;
+  const goalPct = goalDays ? Math.min(100, Math.round((elapsedDays / goalDays) * 100)) : 0;
+
+  const setGoal = (days) => {
+    setGoalDays(days);
+    setShowGoalPicker(false);
+    setCustomGoalInput('');
+    if (streakStart) {
+      setDoc(dbRef(), { startedAt: streakStart, goalDays: days });
+    }
+  };
 
   // SVG ring constants
   const cx = 140, cy = 140, r = 110;
@@ -987,13 +1008,13 @@ const SHBPage = ({ user }) => {
   const milestoneAngle = d => startDeg + (d / arcMaxDays) * 270;
 
   const startNow = () => {
-    setDoc(dbRef(), { startedAt: Date.now() });
+    setDoc(dbRef(), { startedAt: Date.now(), goalDays: goalDays });
     setShowPicker(false);
   };
   const startWithDate = () => {
     const t = customDt ? new Date(customDt).getTime() : NaN;
     if (isNaN(t)) return;
-    setDoc(dbRef(), { startedAt: t });
+    setDoc(dbRef(), { startedAt: t, goalDays: goalDays });
     setShowPicker(false);
     setCustomDt('');
   };
@@ -1097,23 +1118,46 @@ const SHBPage = ({ user }) => {
           <div style={{position:'absolute', inset:0, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', pointerEvents:'none'}}>
             {streakStart ? (
               <>
-                <div style={{fontFamily:"'Raleway',sans-serif", fontSize:'0.6rem', letterSpacing:'0.14em', color:D.muted, textTransform:'uppercase', marginBottom:6}}>
-                  {currentMs ? currentMs.label : 'Streak Active'}
+                <div style={{fontFamily:"'Raleway',sans-serif", fontSize:'0.6rem', letterSpacing:'0.14em', color:D.muted, textTransform:'uppercase', marginBottom:6, pointerEvents:'auto', cursor: goalDays ? 'pointer' : 'default'}}
+                  onClick={() => goalDays && setShowRemaining(v => !v)}>
+                  {showRemaining && goalDays ? 'Time Remaining' : (currentMs ? currentMs.label : 'Streak Active')}
                 </div>
-                <div style={{fontFamily:"'Raleway',sans-serif", fontSize: dDays >= 10 ? 32 : 40, fontWeight:700, color:D.text, lineHeight:1, letterSpacing:'-0.02em'}}>
-                  {dDays > 0 ? `${dDays}d ${dHrs}h` : `${dHrs}h ${pad(dMins)}m`}
-                </div>
-                <div style={{fontFamily:"'Raleway',sans-serif", fontSize:'0.8rem', color:D.muted, marginTop:4}}>
-                  {dDays > 0 ? `${pad(dMins)}m ${pad(dSecs)}s` : `${pad(dSecs)}s`}
-                </div>
-                {nextMs && (
-                  <div style={{fontFamily:"'Raleway',sans-serif", fontSize:'0.6rem', color:D.amber, marginTop:10, textAlign:'center', lineHeight:1.5}}>
-                    {Math.ceil(nextMs.days - elapsedDays) <= 1 ? '<1 day to' : `${Math.ceil(nextMs.days - elapsedDays)} days to`}
-                    <br /><span style={{fontWeight:700}}>{nextMs.hebrew}</span>
-                  </div>
-                )}
-                {!nextMs && (
-                  <div style={{fontFamily:"'Raleway',sans-serif", fontSize:'0.65rem', color:D.amber, marginTop:8}}>All milestones reached 👑</div>
+                {showRemaining && goalDays ? (
+                  <>
+                    <div style={{fontFamily:"'Raleway',sans-serif", fontSize: grDays >= 10 ? 32 : 40, fontWeight:700, color: goalRemainingMs <= 0 ? D.amber : D.text, lineHeight:1, letterSpacing:'-0.02em', pointerEvents:'auto', cursor:'pointer'}}
+                      onClick={() => setShowRemaining(v => !v)}>
+                      {goalRemainingMs <= 0 ? 'Done!' : grDays > 0 ? `${grDays}d ${grHrs}h` : `${grHrs}h ${pad(grMins)}m`}
+                    </div>
+                    <div style={{fontFamily:"'Raleway',sans-serif", fontSize:'0.8rem', color:D.muted, marginTop:4}}>
+                      {goalRemainingMs <= 0 ? `Goal of ${goalDays} days reached` : grDays > 0 ? `${pad(grMins)}m ${pad(grSecs)}s` : `${pad(grSecs)}s`}
+                    </div>
+                    <div style={{fontFamily:"'Raleway',sans-serif", fontSize:'0.6rem', color:D.amber, marginTop:10}}>
+                      {goalPct}% complete · {goalDays}d goal
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div style={{fontFamily:"'Raleway',sans-serif", fontSize: dDays >= 10 ? 32 : 40, fontWeight:700, color:D.text, lineHeight:1, letterSpacing:'-0.02em', pointerEvents:'auto', cursor: goalDays ? 'pointer' : 'default'}}
+                      onClick={() => goalDays && setShowRemaining(v => !v)}>
+                      {dDays > 0 ? `${dDays}d ${dHrs}h` : `${dHrs}h ${pad(dMins)}m`}
+                    </div>
+                    <div style={{fontFamily:"'Raleway',sans-serif", fontSize:'0.8rem', color:D.muted, marginTop:4}}>
+                      {dDays > 0 ? `${pad(dMins)}m ${pad(dSecs)}s` : `${pad(dSecs)}s`}
+                    </div>
+                    {goalDays ? (
+                      <div style={{fontFamily:"'Raleway',sans-serif", fontSize:'0.6rem', color:D.amber, marginTop:10, textAlign:'center', lineHeight:1.5}}>
+                        {goalPct}% of {goalDays}d goal
+                        <br /><span style={{fontSize:'0.55rem', color:D.muted}}>tap to toggle</span>
+                      </div>
+                    ) : nextMs ? (
+                      <div style={{fontFamily:"'Raleway',sans-serif", fontSize:'0.6rem', color:D.amber, marginTop:10, textAlign:'center', lineHeight:1.5}}>
+                        {Math.ceil(nextMs.days - elapsedDays) <= 1 ? '<1 day to' : `${Math.ceil(nextMs.days - elapsedDays)} days to`}
+                        <br /><span style={{fontWeight:700}}>{nextMs.hebrew}</span>
+                      </div>
+                    ) : (
+                      <div style={{fontFamily:"'Raleway',sans-serif", fontSize:'0.65rem', color:D.amber, marginTop:8}}>All milestones reached 👑</div>
+                    )}
+                  </>
                 )}
               </>
             ) : (
@@ -1168,6 +1212,41 @@ const SHBPage = ({ user }) => {
             )}
           </div>
         )}
+        {/* Goal Picker */}
+        <div style={{marginTop:16, marginBottom:8}}>
+          {!showGoalPicker ? (
+            <button onClick={() => setShowGoalPicker(true)}
+              style={{width:'100%', padding:'12px', background:'none', border:`1px solid ${D.borderStr}`, color: goalDays ? D.text : D.muted, borderRadius:12, fontSize:'0.85rem', fontFamily:"'Raleway',sans-serif", cursor:'pointer'}}>
+              {goalDays ? `Goal: ${goalDays} days (${goalPct}%)` : '🎯 Set a goal'}
+            </button>
+          ) : (
+            <div style={{background:D.surface, border:`1px solid ${D.border}`, borderRadius:12, padding:'16px'}}>
+              <p style={{fontFamily:"'Raleway',sans-serif", fontSize:'0.8rem', color:D.muted, marginBottom:12}}>Set your target</p>
+              <div style={{display:'flex', gap:8, marginBottom:12, flexWrap:'wrap'}}>
+                {[7, 14, 30, 50, 90, 180, 365].map(d => (
+                  <button key={d} onClick={() => setGoal(d)}
+                    style={{padding:'8px 14px', background: goalDays===d ? D.blue : D.card, color: goalDays===d ? '#fff' : D.text, border:`1px solid ${goalDays===d ? D.blue : D.border}`, borderRadius:8, fontFamily:"'Raleway',sans-serif", fontSize:'0.8rem', cursor:'pointer', fontWeight: goalDays===d ? 600 : 400}}>
+                    {d}d
+                  </button>
+                ))}
+              </div>
+              <div style={{display:'flex', gap:8}}>
+                <input type="number" min="1" placeholder="Custom days" value={customGoalInput}
+                  onChange={e => setCustomGoalInput(e.target.value)}
+                  style={{flex:1, padding:'9px 12px', borderRadius:8, border:`1px solid ${D.border}`, fontFamily:"'Raleway',sans-serif", fontSize:'0.85rem', color:D.text, background:D.card, boxSizing:'border-box', colorScheme:'dark'}} />
+                <button onClick={() => { const n=parseInt(customGoalInput); if(n>0) setGoal(n); }}
+                  style={{padding:'9px 16px', background:D.blue, color:'#fff', border:'none', borderRadius:8, fontFamily:"'Raleway',sans-serif", fontWeight:600, cursor:'pointer'}}>
+                  Set
+                </button>
+              </div>
+              <div style={{display:'flex', gap:8, marginTop:10}}>
+                {goalDays && <button onClick={() => setGoal(null)} style={{flex:1, padding:'8px', background:'none', border:`1px solid rgba(239,68,68,0.25)`, color:D.red, borderRadius:8, fontFamily:"'Raleway',sans-serif", fontSize:'0.8rem', cursor:'pointer'}}>Clear goal</button>}
+                <button onClick={() => setShowGoalPicker(false)} style={{flex:1, padding:'8px', background:'none', border:`1px solid ${D.border}`, color:D.muted, borderRadius:8, fontFamily:"'Raleway',sans-serif", fontSize:'0.8rem', cursor:'pointer'}}>Cancel</button>
+              </div>
+            </div>
+          )}
+        </div>
+
         {/* Current level card */}
         {streakStart && currentMs && (
           <div style={{marginTop:20, background:D.surface, border:`1px solid ${D.border}`, borderLeft:`3px solid ${D.amber}`, borderRadius:12, padding:'16px 18px'}}>
